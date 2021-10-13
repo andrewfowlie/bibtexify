@@ -10,7 +10,7 @@ function click() {
 
 function parse_id(tabs) {
   let url = tabs[0].url;
-  let urlRegExp = /\d\d\d\d\.\d\d\d\d\d/g;
+  let urlRegExp = /\d\d\d\d\.\d{4,}|[^\/]+\/\d{7,}/gm;
   return url.match(urlRegExp)[0];
 }
 
