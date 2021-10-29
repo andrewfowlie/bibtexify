@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "bibtexify",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Adds a button to copy bibtex of arXiv abstract or pdf webpage",
   
   "page_action": {
