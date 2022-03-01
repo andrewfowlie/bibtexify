@@ -26,7 +26,7 @@ function notify(note) {
     });
 }
 
-function fetch_doi(id) {
+function fetch_publisher_doi(id) {
   let urlRegExp = /<arxiv:doi xmlns:arxiv="http:\/\/arxiv.org\/schemas\/atom">(.*?)<\/arxiv:doi>/g;
   let url = 'http://export.arxiv.org/api/query?id_list=' + id;
   return fetch(url)
@@ -34,8 +34,17 @@ function fetch_doi(id) {
     .then(text => regExpGroup(text, urlRegExp));
 }
 
+function make_arxiv_doi(id) {
+	return "10.48550/arXiv." + id;
+}
+
+function fetch_doi_try_catch(id) {
+  return fetch_publisher_doi(id)
+    .catch(err => make_arxiv_doi(id));
+}
+
 async function copy_bibtex_dx(id) {
-  let doi = await fetch_doi(id);
+  let doi = await fetch_doi_try_catch(id);
   let url = 'http://dx.doi.org/' + doi;
   return fetch(url, {headers: {'Accept': 'application/x-bibtex'}})
     .then(res => res.text())
